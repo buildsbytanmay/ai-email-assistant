@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="about-page">
+    <div class="card about-card">
+        <h1>About AI Email Assistant</h1>
+        <p class="lead">AI Email Assistant is an open-source, early-stage developer project exploring AI-assisted email understanding and response generation.</p>
+        
+        <hr class="divider">
+        
+        <h2>Technology Stack</h2>
+        <div class="tech-grid">
+            <div class="tech-item">
+                <strong>Python & FastAPI</strong>
+                <p>High-performance backend API</p>
+            </div>
+            <div class="tech-item">
+                <strong>SQLite & SQLAlchemy</strong>
+                <p>Lightweight local database</p>
+            </div>
+            <div class="tech-item">
+                <strong>Vanilla JavaScript & CSS</strong>
+                <p>Clean, framework-free frontend</p>
+            </div>
+            <div class="tech-item">
+                <strong>Anthropic Claude API</strong>
+                <p>AI-powered language model integration</p>
+            </div>
+        </div>
+        
+        <hr class="divider">
+        
+        <h2>Project Status: Early Development</h2>
+        <p>This project is designed as a functional MVP to demonstrate clean architecture, proper API integration, and modern UI design principles without over-engineering.</p>
+        
+        <div class="about-actions">
+            <a href="https://github.com" target="_blank" class="btn btn-primary">
+                View Source on GitHub
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="history-page">
+    <header class="page-header">
+        <h1>Analysis History</h1>
+        <p class="subtitle">View previously analyzed emails and generated replies.</p>
+    </header>
+
+    <div class="card table-container">
+        <table class="table" id="history-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Subject</th>
+                    <th>Category</th>
+                    <th>Summary</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="history-body">
+                <!-- Loaded via JS -->
+            </tbody>
+        </table>
+        
+        <div class="empty-state hidden" id="history-empty">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="empty-icon"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+            <h3>No History Found</h3>
+            <p>You haven't analyzed any emails yet.</p>
+        </div>
+        <div class="loader-container" id="history-loader">
+            <div class="loader-dark"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', loadHistory);
+</script>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard">
+    <header class="page-header">
+        <h1>Analyze Email</h1>
+        <p class="subtitle">Paste an email below to understand its intent, summarize it, and generate a contextual reply using AI.</p>
+    </header>
+
+    <div class="split-layout">
+        <div class="card input-section">
+            <form id="analyze-form">
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" name="subject" placeholder="e.g. Project Update Meeting" required>
+                </div>
+                <div class="form-group">
+                    <label for="content">Email Content</label>
+                    <textarea id="content" name="content" rows="12" placeholder="Paste the email content here..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block" id="analyze-btn">
+                    <span class="btn-text">Analyze Email</span>
+                    <div class="loader hidden"></div>
+                </button>
+            </form>
+            <div id="error-message" class="alert alert-error hidden"></div>
+        </div>
+
+        <div class="card result-section hidden" id="result-card">
+            <div class="result-header">
+                <h2>Analysis Result</h2>
+                <span id="res-badge" class="badge"></span>
+            </div>
+            
+            <div class="result-group">
+                <h3>Confidence Score</h3>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="res-confidence-bar"></div>
+                </div>
+                <p class="confidence-text" id="res-confidence-text"></p>
+            </div>
+            
+            <div class="result-group">
+                <h3>Summary</h3>
+                <p id="res-summary" class="summary-box"></p>
+            </div>
+            
+            <div class="result-group">
+                <div class="reply-header">
+                    <h3>Generated Reply</h3>
+                    <button id="copy-reply-btn" class="btn btn-sm btn-outline">Copy Reply</button>
+                </div>
+                <div class="reply-box" id="res-reply"></div>
+            </div>
+            
+            <div class="demo-notice hidden" id="demo-indicator">
+                Generated in Demo Mode (Mocked Data)
+            </div>
+        </div>
+        
+        <div class="empty-state" id="empty-state">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="empty-icon"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+            <h3>Ready for Analysis</h3>
+            <p>Enter an email on the left and click analyze to see AI-generated insights here.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

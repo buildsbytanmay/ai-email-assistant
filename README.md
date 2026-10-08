@@ -1,0 +1,174 @@
+# AI Email Assistant
+
+An open-source, early-stage developer project exploring AI-assisted email understanding and response generation.
+
+## Description
+
+AI Email Assistant allows you to paste an email to understand its intent, summarize it, and generate a contextual reply using the advanced Claude 3.5 AI model. It features a clean, professional interface built without heavy frontend frameworks, using vanilla JavaScript and CSS, alongside a robust FastAPI backend.
+
+## Features
+
+- **Email Categorization**: Automatically classifies emails into Work, Personal, Important, or Spam.
+- **Smart Summarization**: Provides concise 1-sentence summaries of long emails.
+- **Contextual Replies**: Generates professional, ready-to-copy replies tailored to the email's content and category.
+- **History Tracking**: Keeps a local database of all your past analyses, which can be viewed or deleted anytime.
+- **Demo Mode**: Fully functional with mock responses if an API key is not provided, allowing for quick testing and local development.
+
+## Architecture
+
+- **Backend API**: Python with FastAPI
+- **Database**: SQLite with SQLAlchemy ORM
+- **AI Service**: Official Anthropic Python SDK
+- **Frontend**: HTML5, Vanilla JS, and custom CSS via Jinja2 templates
+- **Configuration**: `pydantic-settings` and `.env` files
+
+## Technology Stack
+
+- Python 3
+- FastAPI & Uvicorn
+- Anthropic Claude API
+- SQLite
+- HTML / CSS / Vanilla JS
+
+## Project Structure
+
+```
+ai-email-assistant/
+├── app/
+│   ├── main.py              # Application entry point
+│   ├── config.py            # Environment configuration
+│   ├── database/
+│   │   ├── database.py      # SQLite connection setup
+│   │   └── models.py        # SQLAlchemy models
+│   ├── services/
+│   │   └── claude_service.py # Anthropic API integration
+│   ├── routes/
+│   │   ├── web.py           # HTML frontend routes
+│   │   └── api.py           # JSON API endpoints
+│   ├── templates/           # Jinja2 HTML templates
+│   └── static/              # CSS and JS assets
+├── requirements.txt         # Project dependencies
+├── run.py                   # Server start script
+├── .env.example             # Template for API keys
+└── README.md
+```
+
+## Installation
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/yourusername/ai-email-assistant.git
+   cd ai-email-assistant
+   ```
+
+2. **Create a virtual environment**:
+   ```bash
+   python -m venv venv
+   # On Windows:
+   venv\\Scripts\\activate
+   # On Mac/Linux:
+   source venv/bin/activate
+   ```
+
+3. **Install dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+## Environment Variables
+
+Copy the `.env.example` file to `.env` to configure the application.
+
+```bash
+cp .env.example .env
+```
+
+Your `.env` file should look like this:
+```
+ANTHROPIC_API_KEY=your_actual_api_key_here
+```
+
+## How to Run
+
+Start the local server using `run.py`:
+
+```bash
+python run.py
+```
+
+Or run uvicorn directly:
+
+```bash
+uvicorn app.main:app --host 0.0.0.0 --port 8000
+```
+
+Open your browser to `http://localhost:8000`.
+
+## Demo Mode
+
+If you run the application **without** setting an `ANTHROPIC_API_KEY` in your `.env` file, the app automatically switches to **Demo Mode**. 
+In this mode, simulated deterministic responses are generated based on keyword matching. This allows you to explore the UI and test the full application flow without incurring API costs. A banner will clearly indicate when Demo Mode is active.
+
+## How to Configure Claude API
+
+1. Go to the [Anthropic Console](https://console.anthropic.com/).
+2. Create an account and add billing credits.
+3. Generate a new API key.
+4. Open the `.env` file in the root of the project.
+5. Paste your key: `ANTHROPIC_API_KEY=sk-ant-api03-...`
+6. Restart the server.
+
+## API Endpoints
+
+- `GET /` - Dashboard UI
+- `GET /history` - History UI
+- `GET /about` - About UI
+- `GET /api/health` - API health check
+- `POST /api/analyze` - Analyze an email
+- `GET /api/history` - Retrieve all email analyses
+- `DELETE /api/history/{id}` - Delete a specific analysis record
+
+## Database
+
+The project uses SQLite by default (`ai_email_assistant.db`). Tables are automatically created when the application starts. 
+_Note on deployment_: If you are deploying this to a serverless platform (like Render Free Tier, Heroku, or Vercel), your SQLite database will be ephemeral and deleted between restarts. For persistent storage in production, you can swap the SQLite connection string in `config.py` for a PostgreSQL database URL.
+
+## Testing
+
+A health check endpoint is available at `GET /api/health` to verify the API is running correctly.
+You can use tools like `curl` or Postman to test:
+```bash
+curl http://localhost:8000/api/health
+```
+
+## Deployment
+
+This application is ready to be deployed to any platform that supports Python and Uvicorn.
+The standard production command is:
+```bash
+uvicorn app.main:app --host 0.0.0.0 --port $PORT
+```
+
+For example, on **Render**:
+- Environment: Python 3
+- Build Command: `pip install -r requirements.txt`
+- Start Command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+- Ensure you set `ANTHROPIC_API_KEY` in the environment variables panel of your hosting provider.
+
+## Security Notes
+
+- Never commit the `.env` file to version control.
+- API keys are exclusively processed server-side in `claude_service.py`.
+- No secrets are exposed to the frontend JavaScript.
+- Inputs are validated for length to prevent abuse.
+- Detailed python stack traces are not exposed to the user.
+
+## Future Improvements
+
+- Support for more complex email threads.
+- OAuth integration for fetching emails directly from Gmail or Outlook.
+- Tone selection for generated replies (e.g., Casual, Formal, Urgent).
+
+## License
+
+This project is open-source and available under the MIT License.
